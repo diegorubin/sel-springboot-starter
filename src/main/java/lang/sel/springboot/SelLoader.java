@@ -3,7 +3,7 @@ package lang.sel.springboot;
 import lang.sel.annotations.Constant;
 import lang.sel.annotations.Function;
 import lang.sel.annotations.Operator;
-import lang.sel.core.EngineContext;
+import lang.sel.core.SelContext;
 import lang.sel.core.wrappers.FunctionOptions;
 import lang.sel.interfaces.BinaryOperator;
 import lang.sel.interfaces.UnaryOperator;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 /**
- * Engine loader
+ * Sel loader
  * <p>
  * All logic for search operators, functions and constants and add them in the engine context is implemented in this
  * class.
@@ -26,7 +26,7 @@ import java.util.Map;
  * @author diegorubin
  */
 @Component
-public class EngineLoader {
+public class SelLoader {
 
   private static final String VALUE = "value";
 
@@ -35,17 +35,17 @@ public class EngineLoader {
    * <p>
    * the standard features will also be charged
    *
-   * @param engineContext the engine context instance
-   * @param packageRoot   the package root where the functions, constants and operators are declared
+   * @param selContext  the sel context instance
+   * @param packageRoot the package root where the functions, constants and operators are declared
    */
-  public void load(final EngineContext engineContext, final String packageRoot) {
-    findAndLoad(engineContext, "lang.sel");
-    findAndLoad(engineContext, packageRoot);
+  public void load(final SelContext selContext, final String packageRoot) {
+    findAndLoad(selContext, "lang.sel");
+    findAndLoad(selContext, packageRoot);
   }
 
-  private void findAndLoad(final EngineContext engineContext, final String packageRoot) {
+  private void findAndLoad(final SelContext selContext, final String packageRoot) {
 
-    final ClassLoader classLoader = EngineLoader.class.getClassLoader();
+    final ClassLoader classLoader = SelLoader.class.getClassLoader();
 
     final ClassPathScanningCandidateComponentProvider scanner = new ClassPathScanningCandidateComponentProvider(false);
     scanner.addIncludeFilter(new AnnotationTypeFilter(Function.class));
@@ -59,7 +59,7 @@ public class EngineLoader {
 
         Map<String, Object> attributes = beanDefinition.getMetadata().getAnnotationAttributes(Operator.class.getName());
         if (attributes != null) {
-          addOperator(engineContext, attributes, loadedClass);
+          addOperator(selContext, attributes, loadedClass);
         }
 
         attributes = beanDefinition.getMetadata().getAnnotationAttributes(Function.class.getName());
@@ -67,12 +67,12 @@ public class EngineLoader {
           FunctionOptions options = new FunctionOptions();
           options.setNumberOfArguments("".equals(attributes.get("numberOfArguments")) ?
               null : Integer.valueOf((String) attributes.get("numberOfArguments")));
-          engineContext.addFunction((String) attributes.get(VALUE), loadedClass, options);
+          selContext.addFunction((String) attributes.get(VALUE), loadedClass, options);
         }
 
         attributes = beanDefinition.getMetadata().getAnnotationAttributes(Constant.class.getName());
         if (attributes != null) {
-          engineContext.addConstant((String) attributes.get(VALUE), loadedClass);
+          selContext.addConstant((String) attributes.get(VALUE), loadedClass);
         }
 
       } catch (final Exception e) {
@@ -82,12 +82,12 @@ public class EngineLoader {
 
   }
 
-  private void addOperator(final EngineContext engineContext, final Map<String, Object> attributes, final Class operator) {
+  private void addOperator(final SelContext selContext, final Map<String, Object> attributes, final Class operator) {
     if (BinaryOperator.class.isAssignableFrom(operator)) {
-      engineContext.addBinaryOperator((String) attributes.get(VALUE), operator);
+      selContext.addBinaryOperator((String) attributes.get(VALUE), operator);
     }
     if (UnaryOperator.class.isAssignableFrom(operator)) {
-      engineContext.addUnaryOperator((String) attributes.get(VALUE), operator);
+      selContext.addUnaryOperator((String) attributes.get(VALUE), operator);
     }
   }
 }
