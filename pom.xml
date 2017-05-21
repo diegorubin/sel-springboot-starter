@@ -19,7 +19,7 @@
     <mockito.version>1.8.4</mockito.version>
     <junit.version>4.12</junit.version>
     <springboot.version>1.4.1.RELEASE</springboot.version>
-    <sel.version>0.0.1-SNAPSHOT</sel.version>
+    <sel.version>0.0.3-SNAPSHOT</sel.version>
 
     <!--Github configuration setting.xml -->
     <github.global.server>github</github.global.server>
