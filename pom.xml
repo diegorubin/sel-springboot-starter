@@ -1,16 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <groupId>lang.sel</groupId>
   <artifactId>simple-embedded-language-springboot-starter</artifactId>
-  <version>0.0.2-SNAPSHOT</version>
+  <version>0.0.3-SNAPSHOT</version>
   <packaging>jar</packaging>
-
   <name>Simple Embedded Language Springboot Starter</name>
   <description>Simple Interpreted Embedded Language on JVM Springboot starter</description>
-
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version>1.8</java.version>
@@ -19,24 +15,17 @@
     <mockito.version>1.8.4</mockito.version>
     <junit.version>4.12</junit.version>
     <springboot.version>1.4.1.RELEASE</springboot.version>
-    <sel.version>0.0.3-SNAPSHOT</sel.version>
-
+    <sel.version>0.0.4-SNAPSHOT</sel.version>
     <!--Github configuration setting.xml -->
     <github.global.server>github</github.global.server>
   </properties>
-
   <!--SCM settings -->
   <scm>
     <url>https://github.com/diegorubin/sel</url>
-    <connection>
-      scm:git:https://github.com/diegorubin/sel-springboot-starter.git
-    </connection>
-    <developerConnection>
-      scm:git:https://github.com/diegorubin/sel-springboot-starter.git
-    </developerConnection>
+    <connection>scm:git:https://github.com/diegorubin/sel-springboot-starter.git</connection>
+    <developerConnection>scm:git:https://github.com/diegorubin/sel-springboot-starter.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
-
   <build>
     <plugins>
       <plugin>
@@ -44,7 +33,6 @@
         <artifactId>maven-release-plugin</artifactId>
         <version>${maven.release.plugin.version}</version>
       </plugin>
-
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>2.6</version>
@@ -55,7 +43,6 @@
           </includes>
         </configuration>
       </plugin>
-
       <!-- coverage -->
       <plugin>
         <groupId>org.jacoco</groupId>
@@ -76,9 +63,7 @@
           </execution>
         </executions>
       </plugin>
-
     </plugins>
-
     <pluginManagement>
       <plugins>
         <plugin>
@@ -92,35 +77,27 @@
         </plugin>
       </plugins>
     </pluginManagement>
-
   </build>
-
   <dependencies>
-
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-all</artifactId>
       <version>${mockito.version}</version>
     </dependency>
-
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>${junit.version}</version>
     </dependency>
-
     <dependency>
       <groupId>lang.sel</groupId>
       <artifactId>simple-embedded-language</artifactId>
       <version>${sel.version}</version>
     </dependency>
-
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter</artifactId>
       <version>${springboot.version}</version>
     </dependency>
-
   </dependencies>
-
 </project>
